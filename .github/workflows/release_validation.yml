@@ -29,6 +29,10 @@ jobs:
       - name: Analize
         working-directory: ${{ env.package_dir }}
         run: flutter analyze
+      
+      - name: Tests
+        working-directory: ${{ env.package_dir }}
+        run: flutter test
 
       - name: Build web app
         working-directory: ${{ env.example_dir }}
