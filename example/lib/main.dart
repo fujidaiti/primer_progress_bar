@@ -100,8 +100,8 @@ class _HomeState extends State<Home> {
 
   late final maxTotalValue = segments.fold(0, (acc, seg) => acc + seg.value);
 
-  int displaySegmentCount = 0;
-  double sliderValue = 0;
+  late int displaySegmentCount = segments.length ~/ 2;
+  late double sliderValue = segments.length / 2;
   bool alwaysFillBar = false;
   bool limitLegendLines = false;
 
