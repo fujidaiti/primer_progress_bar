@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 
@@ -36,11 +38,18 @@ class PrimerProgressBar extends StatelessWidget {
     }
     return LayoutBuilder(
       builder: (context, constraints) {
+        final legendMaxWidth =
+            constraints.maxWidth - legendStyle.padding.horizontal;
         final ellipsizedLegendItems = SegmentedBarLegend(
           ellipsisBuilder: legendEllipsisBuilder,
           style: legendStyle,
           children: legendItems,
-        ).ellipsizeItems(context, constraints);
+        ).ellipsizeItems(
+          context,
+          constraints.copyWith(
+            maxWidth: max(legendMaxWidth, 0),
+          ),
+        );
         final segments = [
           for (final item in ellipsizedLegendItems) item.segment
         ];
