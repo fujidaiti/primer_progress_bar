@@ -1,3 +1,5 @@
+import 'package:device_frame/device_frame.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 
@@ -12,6 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget home;
+    if (kIsWeb) {
+      home = DeviceFrame(
+        device: Devices.ios.iPhone13,
+        screen: const Home(),
+      );
+    } else {
+      home = const Home();
+    }
+
     return ValueListenableBuilder(
       valueListenable: themeMode,
       builder: (context, brightness, _) {
@@ -20,7 +32,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             brightness: brightness,
           ),
-          home: const Home(),
+          home: home,
         );
       },
     );

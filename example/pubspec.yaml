@@ -8,6 +8,7 @@ environment:
   sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
+  device_frame: ^1.1.0
   flutter:
     sdk: flutter
   primer_progress_bar:
