@@ -45,12 +45,10 @@ flutter pub add primer_progress_bar
 Define segments to be displayed in the progress bar using `Segment`:
 
 ```dart
-final segments = [
-  Segment(color: Colors.green, value: 24, 
-          label: Text("Dart"), valueLabel: Text("24%")),
-  Segment(color: Colors.lime, value: 11, 
-          label: Text("CSS"), valueLabel: Text("11%")),
-  ...
+List<Segment> segments = [
+  Segment(value: 80, color: Colors.purple, label: Text("Done")),
+  Segment(value: 14, color: Colors.deepOrange, label: Text("In progress")),
+  Segment(value: 6, color: Colors.green, label: Text("Open")),
 ];
 ```
 
@@ -58,12 +56,23 @@ Then, in your `build` method:
 
 ```dart
 Widget build(BuildContext context) {
-  // Make sure the sum of the `segment.value`s is <= `maxTotalValue`.
-  return PrimerProgressBar(segments: segments, maxTotalValue: 100);
+  final progressBar = PrimerProgressBar(segments: segments);
+  return Scaffold(
+    body: Center(
+      child: Padding(
+        padding: EdgeInsets.all(20),
+        child: progressBar,
+      ),
+    ),
+  );
 }
 ```
 
+Finally you will get a nice progress bar :sunglasses:
 
+<div align="center">
+<img src="images/issue-progress.png" width="450" />
+<div/>
 
 ## Usage
 
