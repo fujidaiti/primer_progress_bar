@@ -23,14 +23,18 @@ class SegmentedBar extends StatelessWidget {
   final SegmentedBarStyle style;
 
   /// {@template primer_progress_bar.SegmentedBar.maxTotalValue}
-  /// A Value
+  /// An positive integer that is used as the denominator
+  /// in calculating the proportion of each segment size to the bar length.
+  /// 
+  /// If this is null, it is implicitly set to the sum of
+  /// the values of the segments, resulting in the segments always
+  /// filling the entire bar.
   /// {@endtemplate}
   /// 
   /// {@template primer_progress_bar.SegmentedBar.maxTotalValue.caveat}
-  /// If [maxTotalValue] is not null, it must be greater than or
+  /// If this is not null, it must be greater than or
   /// equal to the sum of the [Segment.value]s of [segments].
   /// {@endtemplate}
-  // TODO: DOCS
   final int? maxTotalValue;
 
   @override
