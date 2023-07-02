@@ -3,13 +3,22 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 
+/// Signature of callbacks that create a [LegendItem] from a [Segment].
 typedef LegendItemBuilder = LegendItem Function(Segment segment);
 
 LegendItem _defaultLegendItemBuilder(Segment segment) {
   return LegendItem(segment: segment);
 }
 
+/// A simple chart that can be used to show multiple colored segments in a row with a legend.
+/// 
+/// This is an implementation of the progress bar defined in
+/// [GitHub Primer Design System](https://www.primer.style/design/components/progress-bar).
 class PrimerProgressBar extends StatelessWidget {
+  /// Create a progress bar with a legend from [Segment]s.
+  /// 
+  /// If [maxTotalValue] is not null, it must be greater than or
+  /// equal to the sum of the [Segment.value]s of [segments].
   const PrimerProgressBar({
     super.key,
     required this.segments,
@@ -20,14 +29,23 @@ class PrimerProgressBar extends StatelessWidget {
     this.legendItemBuilder = _defaultLegendItemBuilder,
   });
 
+  /// A list of [Segment] to be displayed in the progress bar.
   final List<Segment> segments;
+
+  /// A value used to determine 
+  // TODO: DOCS
   final int? maxTotalValue;
 
   /// {@macro primer_progress_bar.SegmentedBarLegend.ellipsisBuilder}
   final EllipsisBuilder? legendEllipsisBuilder;
 
+  /// The style applied to the progress bar.
   final SegmentedBarStyle barStyle;
+
+  /// The style applied to the legend.
   final SegmentedBarLegendStyle legendStyle;
+
+  /// A builder that creates a [LegendItems] from a [Segment] for the legend.
   final LegendItemBuilder legendItemBuilder;
 
   @override
