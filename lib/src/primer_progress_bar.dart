@@ -17,8 +17,7 @@ LegendItem _defaultLegendItemBuilder(Segment segment) {
 class PrimerProgressBar extends StatelessWidget {
   /// Create a progress bar with a legend from [Segment]s.
   ///
-  /// If [maxTotalValue] is not null, it must be greater than or
-  /// equal to the sum of the [Segment.value]s of [segments].
+  /// {@macro primer_progress_bar.SegmentedBar.maxTotalValue.caveat}
   const PrimerProgressBar({
     super.key,
     required this.segments,
