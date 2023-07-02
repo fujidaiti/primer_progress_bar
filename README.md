@@ -69,7 +69,9 @@ Widget build(BuildContext context) {
 
 ### Components
 
+<div align="center">
 <img src="images/terms.png" width="450"/>
+<div/>
 
 The [Primer](https://github.com/primer)'s progress bar consists of 3 components: the *segmented bar*, the *legend*, and the *legend item*s. The progress bar can display multiple colored segments in a horizontal bar, and the legend is placed below the bar with the aligned descriptions of each segment.
 
@@ -96,11 +98,15 @@ PrimerProgressBar(segments: segments, maxTotalValue: 100);
 
 Then, the size of a segment with a `value` of 24, for example, should be the 24% of the bar length.
 
+<div align="center">
 <img src="images/total-value.png" width="450"/>
+<div/>
 
 If `maxTotalValue` is not specified, it is implicitly set to the sum of the `value`s of the segments, resulting in the segments always filling the entire bar.
 
+<div align="center">
 <img src="images/unspecified-total-value.png" width="450" />
+<div/>
 
 
 
@@ -108,7 +114,9 @@ If `maxTotalValue` is not specified, it is implicitly set to the sum of the `val
 
 By default, the legend tries to align all the items while growing in vertical direction.  This is fine if the legend has a relatively small number of items to display, but if you have a large number of segments, you will end up with a verbose legend.
 
+<div align="center">
 <img src="images/maxlines-disabled.gif" width="450" />
+<div/>
 
 For these cases, the legend provides a way to limit the number of lines in which the items are aligned. The following example limits the number of lines in the legend to 2.
 
@@ -137,8 +145,9 @@ PrimerProgressBar(
 
 If the legend failed to align some items within the given line limit, the overflowing items are not shown and instead an item that is created by [ellipsisBuilder](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar/legendEllipsisBuilder.html) (called an *ellipsis*) is displayed as the last item in the legend.
 
+<div align="center">
 <img src="images/maxlines-enabled.gif" width="450" />
-
+<div/>
 
 
 ### Styling
@@ -150,7 +159,9 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 - **Gap** : A space between adjacent segments.
 - **Background** : The color of the bar itself.
 
+<div align="center">
 <img src="images/bar-terms.png" width="450" />
+<div/>
 
 #### Legend item
 
@@ -158,7 +169,9 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 - **Label** : A text explaining what the segment means.
 - **Value label** : A formatted `value` of the segment.
 
+<div align="center">
 <img src="images/legend-item-terms.png" width="450" />
+<div/>
 
 
 ## TODO
