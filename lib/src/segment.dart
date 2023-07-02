@@ -9,8 +9,8 @@ class Segment {
     required this.value,
     required this.color,
     this.label,
-    Text? formattedValue,
-  }) : _valueLabel = formattedValue;
+    Text? valueLabel,
+  }) : _valueLabel = valueLabel;
 
   /// The color of the segment.
   final Color color;

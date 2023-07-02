@@ -47,9 +47,9 @@ Define segments to be displayed in the progress bar using `Segment`:
 ```dart
 final segments = [
   Segment(color: Colors.green, value: 24, 
-          label: Text("Dart"), formattedValue: Text("24%")),
+          label: Text("Dart"), valueLabel: Text("24%")),
   Segment(color: Colors.lime, value: 11, 
-          label: Text("CSS"), formattedValue: Text("11%")),
+          label: Text("CSS"), valueLabel: Text("11%")),
   ...
 ];
 ```
@@ -79,10 +79,10 @@ You can define a segment using [Segment](https://pub.dev/documentation/primer_pr
 
 ```dart
 Segment(color: Colors.lightBlue, value: 24, 
-        label: Text("Dart"), formattedValue: Text("24%"));
+        label: Text("Dart"), valueLabel: Text("24%"));
 ```
 
-The `value` describes the amount of space the segment occupies in the entier bar (see [Proportion of segments](#proportions-of-segment-sizes) section), and the `label` and `formattedValue` are the texts used in the legend to explain what the segment means.
+The `value` describes the amount of space the segment occupies in the entier bar (see [Proportion of segments](#proportions-of-segment-sizes) section), and the `label` and `valueLabel` are the texts used in the legend to explain what the segment means.
 
 The [PrimerProgressBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar-class.html) integrates these 3 components and provides a simple interface to create a chart like the one above, so it should fit to general usecases. However, since each component is modulated, it is easy to use them individually for your own purposes. See [SegmentedBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBar-class.html), [SegmentedBarLegend](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarLegend-class.html), [LegendItem](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/LegendItem-class.html) for more details usage of each component.
 
@@ -136,7 +136,7 @@ PrimerProgressBar(
         value: value,
         color: Colors.grey,
         label: const Text("Other"),
-        formattedValue: Text("$value%"),
+        valueLabel: Text("$value%"),
       ),
     );
   },
