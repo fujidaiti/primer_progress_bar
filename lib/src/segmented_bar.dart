@@ -99,6 +99,7 @@ class SegmentedBar extends StatelessWidget {
 }
 
 /// An immutable style that can be applied to [SegmentedBar]s.
+@immutable
 class SegmentedBarStyle {
   /// Creates a style for [SegmentedBar]s.
   const SegmentedBarStyle({

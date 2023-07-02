@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:primer_progress_bar/src/legend_item.dart';
 import 'package:primer_progress_bar/src/render_legend_simulation.dart';
 import 'package:primer_progress_bar/src/segmented_bar.dart';
@@ -81,6 +82,7 @@ class SegmentedBarLegend extends StatelessWidget {
     return style.padding.wrap(result);
   }
 
+  @internal
   List<LegendItem> ellipsizeItems(
     BuildContext context,
     BoxConstraints constraints,

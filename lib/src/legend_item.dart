@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:primer_progress_bar/src/segment.dart';
 import 'package:primer_progress_bar/src/segmented_bar_legend.dart';
 import 'package:primer_progress_bar/src/utils/padding_wrap.dart';
@@ -80,6 +81,7 @@ class LegendItem extends StatelessWidget {
     );
   }
 
+  @internal
   LegendItemStyle resolveStyle(BuildContext context) {
     const defaultStyle = LegendItemStyle();
 
