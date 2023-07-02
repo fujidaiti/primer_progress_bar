@@ -70,9 +70,9 @@ Widget build(BuildContext context) {
 
 Finally you will get a nice progress bar :sunglasses:
 
-<div align="center">
+<p align="center">
 <img src="images/issue-progress.png" width="450" />
-<div/>
+<p />
 
 ## Usage
 
@@ -80,7 +80,7 @@ Finally you will get a nice progress bar :sunglasses:
 
 <div align="center">
 <img src="images/terms.png" width="450"/>
-<div/>
+</div>
 
 The [Primer](https://github.com/primer)'s progress bar consists of 3 components: the *segmented bar*, the *legend*, and the *legend item*s. The progress bar can display multiple colored segments in a horizontal bar, and the legend is placed below the bar with the aligned descriptions of each segment.
 
@@ -109,13 +109,13 @@ Then, the size of a segment with a `value` of 24, for example, should be the 24%
 
 <div align="center">
 <img src="images/total-value.png" width="450"/>
-<div/>
+</div>
 
 If `maxTotalValue` is not specified, it is implicitly set to the sum of the `value`s of the segments, resulting in the segments always filling the entire bar.
 
 <div align="center">
 <img src="images/unspecified-total-value.png" width="450" />
-<div/>
+</div>
 
 
 
@@ -125,7 +125,7 @@ By default, the legend tries to align all the items while growing in vertical di
 
 <div align="center">
 <img src="images/maxlines-disabled.gif" width="450" />
-<div/>
+</div>
 
 For these cases, the legend provides a way to limit the number of lines in which the items are aligned. The following example limits the number of lines in the legend to 2.
 
@@ -156,7 +156,7 @@ If the legend failed to align some items within the given line limit, the overfl
 
 <div align="center">
 <img src="images/maxlines-enabled.gif" width="450" />
-<div/>
+</div>
 
 
 ### Styling
@@ -170,7 +170,7 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 
 <div align="center">
 <img src="images/bar-terms.png" width="450" />
-<div/>
+</div>
 
 #### Legend item
 
@@ -180,7 +180,7 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 
 <div align="center">
 <img src="images/legend-item-terms.png" width="450" />
-<div/>
+</div>
 
 
 ## TODO
