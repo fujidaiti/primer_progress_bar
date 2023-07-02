@@ -11,12 +11,12 @@ LegendItem _defaultLegendItemBuilder(Segment segment) {
 }
 
 /// A simple chart that can be used to show multiple colored segments in a row with a legend.
-/// 
+///
 /// This is an implementation of the progress bar defined in
 /// [GitHub Primer Design System](https://www.primer.style/design/components/progress-bar).
 class PrimerProgressBar extends StatelessWidget {
   /// Create a progress bar with a legend from [Segment]s.
-  /// 
+  ///
   /// If [maxTotalValue] is not null, it must be greater than or
   /// equal to the sum of the [Segment.value]s of [segments].
   const PrimerProgressBar({
@@ -32,8 +32,7 @@ class PrimerProgressBar extends StatelessWidget {
   /// A list of [Segment] to be displayed in the progress bar.
   final List<Segment> segments;
 
-  /// A value used to determine 
-  // TODO: DOCS
+  /// {@macro primer_progress_bar.SegmentedBar.maxTotalValue}
   final int? maxTotalValue;
 
   /// {@macro primer_progress_bar.SegmentedBarLegend.ellipsisBuilder}
