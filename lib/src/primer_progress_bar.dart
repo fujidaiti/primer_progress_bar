@@ -26,7 +26,7 @@ class PrimerProgressBar extends StatelessWidget {
     this.barStyle = const SegmentedBarStyle(),
     this.legendStyle = const SegmentedBarLegendStyle(),
     this.legendItemBuilder = _defaultLegendItemBuilder,
-  });
+  }) : assert(maxTotalValue == null || maxTotalValue > 0);
 
   /// A list of [Segment] to be displayed in the progress bar.
   final List<Segment> segments;
