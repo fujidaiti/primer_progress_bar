@@ -165,6 +165,7 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 
 - [ ] Add tests
 - [ ] Support mouse hovering
+- [ ] Refactor with Dart3
 
 
 
