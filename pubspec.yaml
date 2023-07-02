@@ -1,6 +1,6 @@
 name: primer_progress_bar
 description: Unoffcial implementation of the progress bar defined in GitHub Primer Design System.
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/fujidaiti/primer_progress_bar.git
 
 environment:
