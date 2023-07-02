@@ -1,19 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:primer_progress_bar/src/segmented_bar.dart';
 
+/// An object representing a segment of [SegmentedBar].
 @immutable
 class Segment {
+  /// Creates a segment.
   const Segment({
     required this.value,
     required this.color,
     this.label,
-    Text? formattedValue,
-  }) : _valueLabel = formattedValue;
+    Text? valueLabel,
+  }) : _valueLabel = valueLabel;
 
+  /// The color of the segment.
   final Color color;
+
+  /// Describes the amount of space the segment occupies in a [SegmentedBar].
   final int value;
+
+  /// A text explaining what the segment means.
   final Text? label;
+
   final Text? _valueLabel;
 
+  /// A formatted [value] of the segment.
   Text get valueLabel => _valueLabel ?? Text(value.toString());
 
   @override

@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:primer_progress_bar/src/segment.dart';
+import 'package:primer_progress_bar/src/segmented_bar_legend.dart';
 import 'package:primer_progress_bar/src/utils/padding_wrap.dart';
 
+/// An item aligned in a [SegmentedBarLegend].
 class LegendItem extends StatelessWidget {
+  /// Create a legend item from a [Segment].
   const LegendItem({
     super.key,
     required this.segment,
     this.style,
   });
 
+  /// The [Segment] that this legend item represents.
   final Segment segment;
+
+  /// The style applied to this item.
   final LegendItemStyle? style;
 
   @override
@@ -74,6 +81,7 @@ class LegendItem extends StatelessWidget {
     );
   }
 
+  @internal
   LegendItemStyle resolveStyle(BuildContext context) {
     const defaultStyle = LegendItemStyle();
 
@@ -104,10 +112,23 @@ class LegendItem extends StatelessWidget {
   }
 }
 
-enum LegendItemBehavior { onlyLabel, onlyValue, both }
+/// Describes how a [LegendItem] paints its texts.
+enum LegendItemBehavior {
+  /// Only paints the [Segment.label].
+  onlyLabel,
 
+  /// Only paints the [Segment.valueLabel].
+  onlyValue,
+
+  /// Paints both of the [Segment.label] and the [Segment.valueLabel].
+  both,
+}
+
+
+/// An immutable style that can be applied to [LegendItem]s.
 @immutable
 class LegendItemStyle {
+  /// Creates a style for [LegendItem]s.
   const LegendItemStyle({
     this.handleSize = 10,
     this.maxLabelSize = 160,
@@ -122,15 +143,40 @@ class LegendItemStyle {
   })  : assert(handleSize > 0),
         assert(maxLabelSize > 0);
 
+  /// The size of the handle.
   final double handleSize;
+
+  /// The maximum width of the label.
   final double maxLabelSize;
+
+  /// The decoration applied to the handle. 
   final BoxDecoration handleDecoration;
+
+  /// The padding around the handle.
   final EdgeInsets handlePadding;
+
+  /// The padding around the label.
   final EdgeInsets labelPadding;
+
+  /// The padding around the value label.
   final EdgeInsets valueLabelPadding;
+
+  /// The padding around the [LegendItem].
   final EdgeInsets padding;
+
+  /// Describes how the [LegendItem] paints its text.
   final LegendItemBehavior behavior;
+
+  /// The fallback style for the [Segment.label].
+  /// 
+  /// If the label of [LegendItem.segment] has no [TextStyle],
+  /// this style is used instead.
   final TextStyle? labelStyle;
+
+  /// The fallback style for the [Segment.valueLabel].
+  /// 
+  /// If the value label of [LegendItem.segment] has no [TextStyle],
+  /// this style is used instead.
   final TextStyle? valueLabelStyle;
 
   @override
