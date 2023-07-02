@@ -82,7 +82,7 @@ Segment(color: Colors.lightBlue, value: 24,
         label: Text("Dart"), formattedValue: Text("24%"));
 ```
 
-The `value` describes the amount of space the segment occupies in the entier bar (see [Proportion of segments](#proportion-of-segments) section), and the `label` and `formattedValue` are the texts used in the legend to explain what the segment means.
+The `value` describes the amount of space the segment occupies in the entier bar (see [Proportion of segments](#proportions-of-segment-sizes) section), and the `label` and `formattedValue` are the texts used in the legend to explain what the segment means.
 
 The [PrimerProgressBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar-class.html) integrates these 3 components and provides a simple interface to create a chart like the one above, so it should fit to general usecases. However, since each component is modulated, it is easy to use them individually for your own purposes. See [SegmentedBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBar-class.html), [SegmentedBarLegend](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarLegend-class.html), [LegendItem](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/LegendItem-class.html) for more details usage of each component.
 
