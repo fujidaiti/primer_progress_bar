@@ -3,7 +3,7 @@
 <br/>
 
 <div align="center">
-<img src="images/introduction.gif" width="450"/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/7acaac75-89ca-4f1f-aad5-af8c2656a1b0" width="450"/>
 <h3 align="center">PrimerProgressBar</h3>
   <p align="center">
     Unoffcial Flutter implementation of the progress bar <br />defined in <a href="https://primer.style/design/components/progress-bar">GitHub Primer Design System</a>.
@@ -19,6 +19,7 @@
     <a href="https://github.com/fujidaiti/primer_progress_bar/issues?q=is%3Aopen+label%3Aenhancement+sort%3Aupdated-desc">Request Feature</a>
   </p>
 </div>
+
 <br/>
 
 <br/>
@@ -38,7 +39,7 @@ Alternatively, you can use `flutter` command like:
 flutter pub add primer_progress_bar
 ```
 
-
+<br/>
 
 ## Getting Started
 
@@ -70,17 +71,19 @@ Widget build(BuildContext context) {
 
 Finally you will get a nice progress bar :sunglasses:
 
-<div align="center">
-<img src="images/issue-progress.png" width="450" />
-<div/>
+<p align="center">
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/9f4b30d0-f173-4f06-98e4-25195d48aefc" width="450" />
+<p />
+<br/>
 
 ## Usage
 
 ### Components
 
 <div align="center">
-<img src="images/terms.png" width="450"/>
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/e9e831d8-194e-4193-846c-069a06a791cb" width="450"/>
+</div>
+
 
 The [Primer](https://github.com/primer)'s progress bar consists of 3 components: the *segmented bar*, the *legend*, and the *legend item*s. The progress bar can display multiple colored segments in a horizontal bar, and the legend is placed below the bar with the aligned descriptions of each segment.
 
@@ -95,7 +98,7 @@ The `value` describes the amount of space the segment occupies in the entier bar
 
 The [PrimerProgressBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar-class.html) integrates these 3 components and provides a simple interface to create a chart like the one above, so it should fit to general usecases. However, since each component is modulated, it is easy to use them individually for your own purposes. See [SegmentedBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBar-class.html), [SegmentedBarLegend](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarLegend-class.html), [LegendItem](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/LegendItem-class.html) for more details usage of each component.
 
-
+<br/>
 
 ### Proportions of segment sizes
 
@@ -108,24 +111,25 @@ PrimerProgressBar(segments: segments, maxTotalValue: 100);
 Then, the size of a segment with a `value` of 24, for example, should be the 24% of the bar length.
 
 <div align="center">
-<img src="images/total-value.png" width="450"/>
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/761edbd1-66ce-453a-bb81-9ee1747c0d17" width="450"/>
+</div>
+
 
 If `maxTotalValue` is not specified, it is implicitly set to the sum of the `value`s of the segments, resulting in the segments always filling the entire bar.
 
 <div align="center">
-<img src="images/unspecified-total-value.png" width="450" />
-<div/>
-
-
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/0f75a9ce-d85a-44cf-8c80-4d3f167b96fc" width="450" />
+</div>
+<br/>
 
 ### Limit legend lines
 
 By default, the legend tries to align all the items while growing in vertical direction.  This is fine if the legend has a relatively small number of items to display, but if you have a large number of segments, you will end up with a verbose legend.
 
 <div align="center">
-<img src="images/maxlines-disabled.gif" width="450" />
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/d8ba4d22-232c-4095-b338-57c776d3f97d" width="450" />
+</div>
+
 
 For these cases, the legend provides a way to limit the number of lines in which the items are aligned. The following example limits the number of lines in the legend to 2.
 
@@ -155,8 +159,9 @@ PrimerProgressBar(
 If the legend failed to align some items within the given line limit, the overflowing items are not shown and instead an item that is created by [ellipsisBuilder](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar/legendEllipsisBuilder.html) (called an *ellipsis*) is displayed as the last item in the legend.
 
 <div align="center">
-<img src="images/maxlines-enabled.gif" width="450" />
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/92a9c0f8-fe7c-4da6-bdd3-953048c07413" width="450" />
+</div>
+<br/>
 
 
 ### Styling
@@ -169,8 +174,8 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 - **Background** : The color of the bar itself.
 
 <div align="center">
-<img src="images/bar-terms.png" width="450" />
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/21adb32c-9dd9-4ef2-9f02-c0cbf78b4709" width="450" />
+</div>
 
 #### Legend item
 
@@ -179,9 +184,10 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 - **Value label** : A formatted `value` of the segment.
 
 <div align="center">
-<img src="images/legend-item-terms.png" width="450" />
-<div/>
+<img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/421eb480-6b93-48f9-bcdf-15ebb95390c2" width="450" />
+</div>
 
+<br/>
 
 ## TODO
 
@@ -189,7 +195,7 @@ The appearace of the 3 components are configurable with [SegmentedBarStyle](http
 - [ ] Support mouse hovering
 - [ ] Refactor with Dart3
 
-
+<br/>
 
 ## Contributing
 
@@ -204,10 +210,9 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
+<br/>
 
 ## Thanks
 
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template/tree/master) by [@othneildrew](https://github.com/othneildrew)
 * [Primer Design System](https://github.com/primer) by [@github](https://github.com/github)
-
