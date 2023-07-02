@@ -1,10 +1,10 @@
 [![Pub](https://img.shields.io/pub/v/primer_progress_bar.svg?logo=flutter&color=blue)](https://pub.dev/packages/primer_progress_bar) [![Pub Popularity](https://img.shields.io/pub/popularity/primer_progress_bar)](https://pub.dev/packages/primer_progress_bar) [![Demo](https://img.shields.io/badge/Demo-try%20it%20on%20web-blueviolet)](https://fujidaiti.github.io/primer_progress_bar/#/) [![Docs](https://img.shields.io/badge/-API%20Reference-orange)](https://pub.dev/documentation/primer_progress_bar/latest/)
 
-<br />
+<br/>
 
 <div align="center">
 <img src="images/introduction.gif" width="450"/>
-<h3 align="center">Primer Progress Bar</h3>
+<h3 align="center">PrimerProgressBar</h3>
   <p align="center">
     Unoffcial Flutter implementation of the progress bar <br />defined in <a href="https://primer.style/design/components/progress-bar">GitHub Primer Design System</a>.
     <br />
@@ -19,124 +19,155 @@
     <a href="https://github.com/fujidaiti/primer_progress_bar/issues?q=is%3Aopen+label%3Aenhancement+sort%3Aupdated-desc">Request Feature</a>
   </p>
 </div>
+<br/>
+
+<br/>
+
+## Installation
+
+Add this package to your `pubspec.yaml`.
+
+```yaml
+dependencies:
+  primer_progress_bar: ^0.2.0
+```
+
+Alternatively, you can use `flutter` command like:
+
+```shell
+flutter pub add primer_progress_bar
+```
 
 
 
-<!-- TABLE OF CONTENTS -->
-
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-### Built With
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Define segments to be displayed in the progress bar using `Segment`:
 
-### Prerequisites
+```dart
+final segments = [
+  Segment(color: Colors.green, value: 24, 
+          label: Text("Dart"), formattedValue: Text("24%")),
+  Segment(color: Colors.lime, value: 11, 
+          label: Text("CSS"), formattedValue: Text("11%")),
+  ...
+];
+```
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Then, in your `build` method:
 
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+```dart
+Widget build(BuildContext context) {
+  // Make sure the sum of the `segment.value`s is <= `maxTotalValue`.
+  return PrimerProgressBar(segments: segments, maxTotalValue: 100);
+}
+```
 
 
 
-<!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+### Components
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<img src="images/terms.png" width="450"/>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The [Primer](https://github.com/primer)'s progress bar consists of 3 components: the *segmented bar*, the *legend*, and the *legend item*s. The progress bar can display multiple colored segments in a horizontal bar, and the legend is placed below the bar with the aligned descriptions of each segment.
 
+You can define a segment using [Segment](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/Segment-class.html):
 
+```dart
+Segment(color: Colors.lightBlue, value: 24, 
+        label: Text("Dart"), formattedValue: Text("24%"));
+```
 
-<!-- ROADMAP -->
-## Roadmap
+The `value` describes the amount of space the segment occupies in the entier bar (see [Proportion of segments](#proportion-of-segments) section), and the `label` and `formattedValue` are the texts used in the legend to explain what the segment means.
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+The [PrimerProgressBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar-class.html) integrates these 3 components and provides a simple interface to create a chart like the one above, so it should fit to general usecases. However, since each component is modulated, it is easy to use them individually for your own purposes. See [SegmentedBar](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBar-class.html), [SegmentedBarLegend](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarLegend-class.html), [LegendItem](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/LegendItem-class.html) for more details usage of each component.
 
 
 
-<!-- CONTRIBUTING -->
+### Proportions of segment sizes
+
+The proportion of each segment size to the bar length is determined by dividing the [maxTotalValue](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar/maxTotalValue.html) according to the `value`s of the segments.  For example, if you want to display the percentage of each programming language used in a project,  the `value` could be the percentage for a language and the `maxTotalValue` is 100.
+
+```dart
+PrimerProgressBar(segments: segments, maxTotalValue: 100);
+```
+
+Then, the size of a segment with a `value` of 24, for example, should be the 24% of the bar length.
+
+<img src="images/total-value.png" width="450"/>
+
+If `maxTotalValue` is not specified, it is implicitly set to the sum of the `value`s of the segments, resulting in the segments always filling the entire bar.
+
+<img src="images/unspecified-total-value.png" width="450" />
+
+
+
+### Limit legend lines
+
+By default, the legend tries to align all the items while growing in vertical direction.  This is fine if the legend has a relatively small number of items to display, but if you have a large number of segments, you will end up with a verbose legend.
+
+<img src="images/maxlines-disabled.gif" width="450" />
+
+For these cases, the legend provides a way to limit the number of lines in which the items are aligned. The following example limits the number of lines in the legend to 2.
+
+```dart
+PrimerProgressBar(
+  segments: segments,
+  // Limits the number of the lines in the legend to 2.
+  legendStyle: const SegmentedBarLegendStyle(maxLines: 2),
+  // A builder of a legend item that represent the overflowed items.
+  // `truncatedItemCount` is the number of items that is overflowed.
+  ellipsisBuilder: (truncatedItemCount) {
+    final value = segments
+        .skip(segments.length - truncatedItemCount)
+        .fold(0, (accValue, segment) => accValue + segment.value);
+    return LegendItem(
+      segment: Segment(
+        value: value,
+        color: Colors.grey,
+        label: const Text("Other"),
+        formattedValue: Text("$value%"),
+      ),
+    );
+  },
+);
+```
+
+If the legend failed to align some items within the given line limit, the overflowing items are not shown and instead an item that is created by [ellipsisBuilder](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar/legendEllipsisBuilder.html) (called an *ellipsis*) is displayed as the last item in the legend.
+
+<img src="images/maxlines-enabled.gif" width="450" />
+
+
+
+### Styling
+
+The appearace of the 3 components are configurable with [SegmentedBarStyle](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarStyle-class.html), [SegmentedBarLegendStyle](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/SegmentedBarLegendStyle-class.html), [LegendItemStyle](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/LegendItemStyle-class.html), respectively. The documentation will provide detailed descriptions of each class and its properties, while our focus here is on briefly explaining the terminology used in the documentation.
+
+#### Segmented bar
+
+- **Gap** : A space between adjacent segments.
+- **Background** : The color of the bar itself.
+
+<img src="images/bar-terms.png" width="450" />
+
+#### Legend item
+
+- **Handle** : A small shape filled with the segment's color and placed at the start of the item.
+- **Label** : A text explaining what the segment means.
+- **Value label** : A formatted `value` of the segment.
+
+<img src="images/legend-item-terms.png" width="450" />
+
+
+## TODO
+
+- [ ] Add tests
+- [ ] Support mouse hovering
+
+
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -150,70 +181,10 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Thanks
 
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[/JQuery-url]: https://jquery.com
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template/tree/master) by [@othneildrew](https://github.com/othneildrew)
+* [Primer Design System](https://github.com/primer) by [@github](https://github.com/github)
 
