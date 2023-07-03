@@ -68,9 +68,24 @@ void main() {
       (WidgetTester tester) async {
     // Create a list of segments with labels that are longer than the maximum lines.
     final segments = [
-      const Segment(value: 80, color: Colors.purple, label: Text("label")),
-      const Segment(value: 14, color: Colors.deepOrange, label: Text("label")),
-      const Segment(value: 6, color: Colors.green, label: Text("label")),
+      const Segment(value: 80, color: Colors.white, label: Text("Label")),
+      const Segment(value: 80, color: Colors.purple, label: Text("Label")),
+      const Segment(value: 80, color: Colors.blue, label: Text("Label")),
+      const Segment(value: 80, color: Colors.green, label: Text("Label")),
+      const Segment(value: 80, color: Colors.black, label: Text("Label")),
+      const Segment(value: 10, color: Colors.amber, label: Text("Label")),
+      const Segment(value: 80, color: Colors.white, label: Text("Label")),
+      const Segment(value: 80, color: Colors.purple, label: Text("Label")),
+      const Segment(value: 80, color: Colors.blue, label: Text("Label")),
+      const Segment(value: 80, color: Colors.green, label: Text("Label")),
+      const Segment(value: 80, color: Colors.black, label: Text("Label")),
+      const Segment(value: 10, color: Colors.amber, label: Text("Label")),
+      const Segment(value: 80, color: Colors.white, label: Text("Label")),
+      const Segment(value: 80, color: Colors.purple, label: Text("Label")),
+      const Segment(value: 80, color: Colors.blue, label: Text("Label")),
+      const Segment(value: 80, color: Colors.green, label: Text("Label")),
+      const Segment(value: 80, color: Colors.black, label: Text("Label")),
+      const Segment(value: 10, color: Colors.amber, label: Text("Label")),
     ];
 
     // Build the widget tree with a maxLines value of 2 and an ellipsisBuilder function that creates an other LegendItem for the overflowed items
