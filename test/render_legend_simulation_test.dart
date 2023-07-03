@@ -64,7 +64,7 @@ void main() {
   });
 
   testWidgets(
-      'PrimerProgressBar displays ellipsis when legend items fail to align',
+      'PrimerProgressBar displays legend ellipsis when legend items are longer than the maximum lines',
       (WidgetTester tester) async {
     // Create a list of segments with labels that are longer than the maximum lines.
     final segments = [
@@ -106,7 +106,7 @@ void main() {
   });
 
   testWidgets(
-      'PrimerProgressBar displays correct progress bar length and value label with custom maximum value',
+      'PrimerProgressBar displays correct progress bar value label with custom maximum value',
       (WidgetTester tester) async {
     // Create a list of segments with a custom maximum value
     final segments = [
@@ -133,7 +133,7 @@ void main() {
     expect(find.byType(LegendItem), findsNWidgets(segments.length));
   });
   testWidgets(
-      'PrimerProgressBar displays correct progress bar length and color with custom SegmentedBarStyle',
+      'PrimerProgressBar displays correct progress bar color with custom SegmentedBarStyle',
       (WidgetTester tester) async {
     // Create a list of segments with a custom color
     final segments = [
