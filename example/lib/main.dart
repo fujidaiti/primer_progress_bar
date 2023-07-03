@@ -127,7 +127,8 @@ class _HomeState extends State<Home> {
           : const SegmentedBarLegendStyle(maxLines: null),
       legendEllipsisBuilder: (truncatedItemCount) {
         final value = segments
-            .skip(segments.length - truncatedItemCount)
+            .skip(displaySegmentCount - truncatedItemCount)
+            .take(truncatedItemCount)
             .fold(0, (accValue, segment) => accValue + segment.value);
         return LegendItem(
           segment: Segment(
