@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -141,34 +143,31 @@ class _HomeState extends State<Home> {
       },
     );
 
-    final options = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SwitchListTile(
-          title: const Text("Dark Theme"),
-          value: themeMode.value == Brightness.dark,
-          onChanged: (turnedOn) {
-            setState(() {
-              themeMode.value = turnedOn ? Brightness.dark : Brightness.light;
-            });
-          },
-        ),
-        SwitchListTile(
-          title: const Text("Always fill the entier bar"),
-          value: alwaysFillBar,
-          onChanged: (turnedOn) {
-            setState(() => alwaysFillBar = turnedOn);
-          },
-        ),
-        SwitchListTile(
-          title: const Text("Limit the legend lines"),
-          value: limitLegendLines,
-          onChanged: (turnedOn) {
-            setState(() => limitLegendLines = turnedOn);
-          },
-        ),
-      ],
-    );
+    final options = [
+      SwitchListTile(
+        title: const Text("Dark Theme"),
+        value: themeMode.value == Brightness.dark,
+        onChanged: (turnedOn) {
+          setState(() {
+            themeMode.value = turnedOn ? Brightness.dark : Brightness.light;
+          });
+        },
+      ),
+      SwitchListTile(
+        title: const Text("Always fill the entier bar"),
+        value: alwaysFillBar,
+        onChanged: (turnedOn) {
+          setState(() => alwaysFillBar = turnedOn);
+        },
+      ),
+      SwitchListTile(
+        title: const Text("Limit the legend lines"),
+        value: limitLegendLines,
+        onChanged: (turnedOn) {
+          setState(() => limitLegendLines = turnedOn);
+        },
+      ),
+    ];
 
     final slider = SizedBox(
       height: 56,
@@ -187,19 +186,45 @@ class _HomeState extends State<Home> {
       ),
     );
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: progressBar,
+    final body = Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: progressBar,
+            ),
+          ),
+          ...options,
+        ],
+      ),
+    );
+
+    const minBodyHeight = 400.0;
+    final bodyContainer = LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: minBodyHeight,
+              maxHeight: max(
+                constraints.maxHeight,
+                minBodyHeight,
               ),
             ),
-            options,
-          ],
-        ),
+            child: body,
+          ),
+        );
+      },
+    );
+
+    return Scaffold(
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: bodyContainer,
       ),
       bottomNavigationBar: BottomAppBar(
         child: slider,
