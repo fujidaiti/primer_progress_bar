@@ -45,4 +45,5 @@ jobs:
         run: flutter pub publish --force
 
   deploy-example:
+    needs: publish
     uses: ./.github/workflows/deploy_example.yml
