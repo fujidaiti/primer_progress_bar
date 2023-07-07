@@ -221,7 +221,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(),
       extendBodyBehindAppBar: true,
-      body: bodyContainer,
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: bodyContainer,
+      ),
       bottomNavigationBar: BottomAppBar(
         child: slider,
       ),
