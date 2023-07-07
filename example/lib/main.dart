@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -187,22 +189,42 @@ class _HomeState extends State<Home> {
       ),
     );
 
+    final body = Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: progressBar,
+            ),
+          ),
+          options,
+        ],
+      ),
+    );
+
+    const minBodyHeight = 400.0;
+    final bodyContainer = LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: minBodyHeight,
+              maxHeight: max(
+                constraints.maxHeight,
+                minBodyHeight,
+              ),
+            ),
+            child: body,
+          ),
+        );
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(),
       extendBodyBehindAppBar: true,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Expanded(
-              child: Center(
-                child: progressBar,
-              ),
-            ),
-            options,
-          ],
-        ),
-      ),
+      body: bodyContainer,
       bottomNavigationBar: BottomAppBar(
         child: slider,
       ),
