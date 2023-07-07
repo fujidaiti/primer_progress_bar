@@ -143,34 +143,31 @@ class _HomeState extends State<Home> {
       },
     );
 
-    final options = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SwitchListTile(
-          title: const Text("Dark Theme"),
-          value: themeMode.value == Brightness.dark,
-          onChanged: (turnedOn) {
-            setState(() {
-              themeMode.value = turnedOn ? Brightness.dark : Brightness.light;
-            });
-          },
-        ),
-        SwitchListTile(
-          title: const Text("Always fill the entier bar"),
-          value: alwaysFillBar,
-          onChanged: (turnedOn) {
-            setState(() => alwaysFillBar = turnedOn);
-          },
-        ),
-        SwitchListTile(
-          title: const Text("Limit the legend lines"),
-          value: limitLegendLines,
-          onChanged: (turnedOn) {
-            setState(() => limitLegendLines = turnedOn);
-          },
-        ),
-      ],
-    );
+    final options = [
+      SwitchListTile(
+        title: const Text("Dark Theme"),
+        value: themeMode.value == Brightness.dark,
+        onChanged: (turnedOn) {
+          setState(() {
+            themeMode.value = turnedOn ? Brightness.dark : Brightness.light;
+          });
+        },
+      ),
+      SwitchListTile(
+        title: const Text("Always fill the entier bar"),
+        value: alwaysFillBar,
+        onChanged: (turnedOn) {
+          setState(() => alwaysFillBar = turnedOn);
+        },
+      ),
+      SwitchListTile(
+        title: const Text("Limit the legend lines"),
+        value: limitLegendLines,
+        onChanged: (turnedOn) {
+          setState(() => limitLegendLines = turnedOn);
+        },
+      ),
+    ];
 
     final slider = SizedBox(
       height: 56,
@@ -198,7 +195,7 @@ class _HomeState extends State<Home> {
               child: progressBar,
             ),
           ),
-          options,
+          ...options,
         ],
       ),
     );
