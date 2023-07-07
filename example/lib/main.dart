@@ -1,7 +1,6 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:primer_progress_bar/primer_progress_bar.dart';
 
 void main() {
@@ -28,17 +27,12 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: themeMode,
       builder: (context, brightness, _) {
-        return AnnotatedRegion(
-          value: brightness == Brightness.light
-              ? SystemUiOverlayStyle.dark
-              : SystemUiOverlayStyle.light,
-          child: MaterialApp(
-            theme: ThemeData(
-              useMaterial3: true,
-              brightness: brightness,
-            ),
-            home: home,
+        return MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: brightness,
           ),
+          home: home,
         );
       },
     );
@@ -194,6 +188,8 @@ class _HomeState extends State<Home> {
     );
 
     return Scaffold(
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
