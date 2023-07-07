@@ -30,7 +30,7 @@ Add this package to your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  primer_progress_bar: ^0.2.0
+  primer_progress_bar: ^0.3.0
 ```
 
 Alternatively, you can use `flutter` command like:
