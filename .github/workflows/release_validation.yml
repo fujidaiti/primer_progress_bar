@@ -26,10 +26,14 @@ jobs:
         working-directory: ${{ env.package_dir }}
         run: flutter pub get
 
+      - name: Code generation
+        working-directory: ${{ env.package_dir }}
+        run: dart run build_runner build
+
       - name: Analize
         working-directory: ${{ env.package_dir }}
         run: flutter analyze
-      
+
       - name: Tests
         working-directory: ${{ env.package_dir }}
         run: flutter test
