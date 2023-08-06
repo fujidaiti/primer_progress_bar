@@ -35,9 +35,13 @@ jobs:
         working-directory: ${{ env.package_dir }}
         run: dart run build_runner build
 
+      - name: Install pana
+        working-directory: ${{ env.package_dir }}
+        run: dart pub global activate pana
+
       - name: Analize
         working-directory: ${{ env.package_dir }}
-        run: flutter analyze
+        run: pana
 
       - name: Dry run
         working-directory: ${{ env.package_dir }}
