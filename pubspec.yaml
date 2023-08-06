@@ -1,10 +1,10 @@
 name: primer_progress_bar
 description: Unoffcial Flutter implementation of the progress bar defined in GitHub Primer Design System.
-version: 0.2.1
+version: 0.3.0
 repository: https://github.com/fujidaiti/primer_progress_bar.git
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=2.19.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -16,3 +16,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
+  mockito: ^5.4.2
+  build_runner: ^2.4.6
