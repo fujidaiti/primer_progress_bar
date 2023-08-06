@@ -161,6 +161,7 @@ If the legend failed to align some items within the given line limit, the overfl
 <div align="center">
 <img src="https://github.com/fujidaiti/primer_progress_bar/assets/68946713/92a9c0f8-fe7c-4da6-bdd3-953048c07413" width="450" />
 </div>
+
 You can use `DefaultLegendEllipsisBuilder` as a shorthand for the above example:
 
 ```dart
