@@ -9,7 +9,7 @@ import 'render_legend_simulation_test.mocks.dart';
 
 const _testRenderExtent = 300.0;
 const _testCharWidth = 10.0;
-const _testEllipsisText = "Other";
+const _testEllipsisLength = 50;
 
 void main() {
   group("alignItem", () {
@@ -195,6 +195,134 @@ void main() {
       );
     });
   });
+
+  group("canPlaceEllipsis", () {
+    test("should return true if there is enough space to place an ellipsis",
+        () {
+      final sim = _TestRenderLegendSimulation(
+          maxLines: 1, items: [_stringOfLength(200)]);
+
+      var context = const RenderSimulationResult();
+      context = sim.alignItem(sim.items[0], context);
+
+      expect(sim.canPlaceEllipsis(context), true);
+    });
+
+    test("should return false if there is no space to place an ellipsis", () {
+      final sim = _TestRenderLegendSimulation(
+          maxLines: 1, items: [_stringOfLength(290)]);
+
+      var context = const RenderSimulationResult();
+      context = sim.alignItem(sim.items[0], context);
+
+      expect(sim.canPlaceEllipsis(context), false);
+    });
+  });
+
+  group("ellipsize", () {
+    test("shuold do nothing if the items are not overflowed", () {
+      final sim = _TestRenderLegendSimulation(
+          maxLines: 1, items: [_stringOfLength(100)]);
+
+      final before =
+          sim.alignItem(sim.items[0], const RenderSimulationResult());
+      final after = sim.ellipsize(before);
+
+      expect(after, _resultMatcher(before));
+    });
+
+    test("should remove overflowed items so that an ellipsis can be placed",
+        () {
+      final sim = _TestRenderLegendSimulation(
+        maxLines: 2,
+        items: [
+          _stringOfLength(290),
+          _stringOfLength(250),
+          _stringOfLength(50),
+          _stringOfLength(100),
+        ],
+      );
+
+      var context = const RenderSimulationResult();
+      context = sim.alignItem(sim.items[0], context);
+      context = sim.alignItem(sim.items[1], context);
+      context = sim.alignItem(sim.items[2], context);
+      context = sim.alignItem(sim.items[3], context);
+
+      expect(
+        context,
+        _resultMatcher(const RenderSimulationResult(
+          offset: 100,
+          prevLineOffset: 300,
+          currentLine: 3,
+          alignedItemCount: 4,
+        )),
+      );
+
+      context = sim.ellipsize(context);
+
+      expect(
+        context,
+        _resultMatcher(const RenderSimulationResult(
+          offset: 250,
+          prevLineOffset: 0,
+          currentLine: 2,
+          alignedItemCount: 2,
+        )),
+      );
+    });
+  });
+
+  group("alignItems", () {
+    test("should align all items if there are enough space to place them", () {
+      final sim = _TestRenderLegendSimulation(
+        maxLines: 2,
+        items: [
+          _stringOfLength(290),
+          _stringOfLength(100),
+          _stringOfLength(100),
+        ],
+      );
+
+      expect(
+        sim.alignItems(),
+        _resultMatcher(const RenderSimulationResult(
+          offset: 200,
+          prevLineOffset: 290,
+          currentLine: 2,
+          alignedItemCount: 3,
+        )),
+      );
+    });
+
+    test(
+        "should align some items with an ellipsis "
+        "if there are no enough space to place them all", () {
+      final sim = _TestRenderLegendSimulation(
+        maxLines: 2,
+        items: [
+          _stringOfLength(290),
+          _stringOfLength(100),
+          _stringOfLength(100),
+          _stringOfLength(200),
+        ],
+      );
+
+      final result = sim.alignItems();
+      expect(
+        result,
+        _resultMatcher(const RenderSimulationResult(
+          offset: 200,
+          prevLineOffset: 0,
+          currentLine: 2,
+          alignedItemCount: 3,
+        )),
+      );
+
+      final availableSpaceForEllipsis = _testRenderExtent - result.offset;
+      expect(availableSpaceForEllipsis >= _testEllipsisLength, true);
+    });
+  });
 }
 
 TypeMatcher<RenderSimulationResult> _resultMatcher(
@@ -226,12 +354,12 @@ class _TestRenderLegendSimulation extends RenderLegendSimulation {
           spacing: 0.0,
           textScaleFactor: 1.0,
           maxLines: maxLines,
-          ellipsisBuilder: (_) => const LegendItem(
+          ellipsisBuilder: (_) => LegendItem(
             segment: Segment(
               value: 1,
               color: Colors.grey,
-              label: Text(_testEllipsisText),
-              valueLabel: Text(""),
+              label: Text(_stringOfLength(_testEllipsisLength)),
+              valueLabel: const Text(""),
             ),
           ),
           items: [
