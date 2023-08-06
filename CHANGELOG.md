@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.0 August 06, 2023
+
+- Add: `DefaultLegendEllipsisBuilder`
+- Add: missing tests
+
 ## 0.2.1 July 03, 2023
 
 - Fix: broken README styling
