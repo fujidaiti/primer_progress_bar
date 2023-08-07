@@ -41,7 +41,7 @@ jobs:
 
       - name: Analize
         working-directory: ${{ env.package_dir }}
-        run: pana
+        run: pana --exit-code-threshold 0 --no-warning
 
       - name: Dry run
         working-directory: ${{ env.package_dir }}
