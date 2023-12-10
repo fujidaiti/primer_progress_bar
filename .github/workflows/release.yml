@@ -54,4 +54,6 @@ jobs:
 
   deploy-example:
     needs: publish
+    permissions:
+      contents: write
     uses: ./.github/workflows/deploy_example.yml
