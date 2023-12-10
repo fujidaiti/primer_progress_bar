@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1 December 10, 2023
+
+- Fix: `TextPainter.textScaleFactor` is deprecated
+
 ## 0.3.0 August 06, 2023
 
 - Add: `DefaultLegendEllipsisBuilder`
