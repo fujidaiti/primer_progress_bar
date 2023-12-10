@@ -43,7 +43,7 @@ class RenderLegendSimulation {
     required this.renderExtent,
     required this.items,
     required this.textDirection,
-    required this.textScaleFactor,
+    required this.textScaler,
     required this.ellipsisBuilder,
   });
 
@@ -53,7 +53,7 @@ class RenderLegendSimulation {
   final double renderExtent;
   final List<LegendItem> items;
   final TextDirection textDirection;
-  final double textScaleFactor;
+  final TextScaler textScaler;
   final EllipsisBuilder ellipsisBuilder;
 
   bool isOverflowed(RenderSimulationResult context) =>
@@ -182,7 +182,7 @@ class RenderLegendSimulation {
       text: TextSpan(text: text, style: style),
       maxLines: 1,
       ellipsis: _labelEllipsis,
-      textScaleFactor: textScaleFactor,
+      textScaler: textScaler,
       textDirection: textDirection,
     )..layout(maxWidth: maxExtent);
     return result.size.width;

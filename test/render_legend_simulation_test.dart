@@ -352,7 +352,7 @@ class _TestRenderLegendSimulation extends RenderLegendSimulation {
           textDirection: TextDirection.ltr,
           renderExtent: _testRenderExtent,
           spacing: 0.0,
-          textScaleFactor: 1.0,
+          textScaler: const TextScaler.linear(1.0),
           maxLines: maxLines,
           ellipsisBuilder: (_) => LegendItem(
             segment: Segment(

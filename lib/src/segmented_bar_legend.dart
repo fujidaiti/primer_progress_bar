@@ -29,7 +29,7 @@ class SegmentedBarLegend extends StatelessWidget {
   /// align some items within the given line limit, the overflowing items
   /// are not shown and instead an item that is created by [ellipsisBuilder]
   /// (called an *ellipsis*) is displayed as the last item in the legend.
-  /// 
+  ///
   /// If [style.maxLines] is not null, this property must not also be null.
   ///
   /// Example:
@@ -100,7 +100,8 @@ class SegmentedBarLegend extends StatelessWidget {
       maxLines: style.maxLines,
       items: children,
       ellipsisBuilder: ellipsisBuilder!,
-      textScaleFactor: MediaQuery.maybeOf(context)?.textScaleFactor ?? 1.0,
+      textScaler:
+          MediaQuery.maybeOf(context)?.textScaler ?? const TextScaler.linear(1),
       textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
     ).alignItems();
 
