@@ -123,7 +123,7 @@ void main() {
       );
     });
 
-    test("shuold remove the line that is no longer needed", () {
+    test("should remove the line that is no longer needed", () {
       final sim = _TestRenderLegendSimulation(
         maxLines: 2,
         items: [
@@ -220,7 +220,7 @@ void main() {
   });
 
   group("ellipsize", () {
-    test("shuold do nothing if the items are not overflowed", () {
+    test("should do nothing if the items are not overflowed", () {
       final sim = _TestRenderLegendSimulation(
           maxLines: 1, items: [_stringOfLength(100)]);
 
