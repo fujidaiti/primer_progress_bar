@@ -24,6 +24,12 @@
 
 <br/>
 
+## Announcement
+
+### Dec 14, 2023
+
+Version `0.4.0` has been released. It requires the Flutter SDK version `3.16.0` or higher. If you are using an older version, please use version `0.3.0` or lower.
+
 ## Installation
 
 Add this package to your `pubspec.yaml`.
