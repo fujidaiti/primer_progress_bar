@@ -124,7 +124,6 @@ enum LegendItemBehavior {
   both,
 }
 
-
 /// An immutable style that can be applied to [LegendItem]s.
 @immutable
 class LegendItemStyle {
@@ -149,7 +148,7 @@ class LegendItemStyle {
   /// The maximum width of the label.
   final double maxLabelSize;
 
-  /// The decoration applied to the handle. 
+  /// The decoration applied to the handle.
   final BoxDecoration handleDecoration;
 
   /// The padding around the handle.
@@ -168,13 +167,13 @@ class LegendItemStyle {
   final LegendItemBehavior behavior;
 
   /// The fallback style for the [Segment.label].
-  /// 
+  ///
   /// If the label of [LegendItem.segment] has no [TextStyle],
   /// this style is used instead.
   final TextStyle? labelStyle;
 
   /// The fallback style for the [Segment.valueLabel].
-  /// 
+  ///
   /// If the value label of [LegendItem.segment] has no [TextStyle],
   /// this style is used instead.
   final TextStyle? valueLabelStyle;

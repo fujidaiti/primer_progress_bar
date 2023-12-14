@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0 December 14, 2023
+
+- Bump the minimum flutter version to 3.16.0 ([#21](https://github.com/fujidaiti/primer_progress_bar/issues/21))
+
 ## 0.3.1 December 10, 2023
 
 - Fix: `TextPainter.textScaleFactor` is deprecated
