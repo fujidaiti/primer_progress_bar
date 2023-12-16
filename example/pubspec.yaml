@@ -2,7 +2,7 @@ name: example
 description: An example usage of primer_progress_bar.
 publish_to: "none"
 
-version: 0.4.0
+version: 0.4.1
 
 environment:
   sdk: ">=3.0.5 <4.0.0"

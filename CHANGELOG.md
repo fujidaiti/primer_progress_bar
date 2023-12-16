@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1 December 16, 2023
+
+Just some documentation improvements. There are no functional changes.
+
 ## 0.4.0 December 14, 2023
 
 - Bump the minimum flutter version to 3.16.0 ([#21](https://github.com/fujidaiti/primer_progress_bar/issues/21))
