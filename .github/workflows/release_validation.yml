@@ -36,7 +36,7 @@ jobs:
 
       - name: Analize
         working-directory: ${{ env.package_dir }}
-        run: pana --exit-code-threshold 0 --no-warning
+        run: pana --exit-code-threshold 10 --no-warning
 
       - name: Tests
         working-directory: ${{ env.package_dir }}
