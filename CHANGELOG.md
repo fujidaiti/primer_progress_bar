@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.2 May 18, 2024
+
+Dependency updates.
+
 ## 0.4.1 December 16, 2023
 
 Just some documentation improvements. There are no functional changes.
