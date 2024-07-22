@@ -26,6 +26,7 @@ class PrimerProgressBar extends StatelessWidget {
     this.barStyle = const SegmentedBarStyle(),
     this.legendStyle = const SegmentedBarLegendStyle(),
     this.legendItemBuilder = _defaultLegendItemBuilder,
+    this.showLegend = true,
   }) : assert(maxTotalValue == null || maxTotalValue > 0);
 
   /// A list of [Segment] to be displayed in the progress bar.
@@ -46,11 +47,16 @@ class PrimerProgressBar extends StatelessWidget {
   /// A builder that creates a [LegendItems] from a [Segment] for the legend.
   final LegendItemBuilder legendItemBuilder;
 
+  /// Whether to display the legend.
+  ///
+  /// If `true`, the legend will be shown. If `false`, the legend will be hidden.
+  final bool showLegend;
+
   @override
   Widget build(BuildContext context) {
     final legendItems = segments.map(legendItemBuilder).toList();
     if (legendStyle.maxLines == null) {
-      return _build(context, segments, legendItems);
+      return _build(context, segments, legendItems, showLegend);
     }
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -69,16 +75,13 @@ class PrimerProgressBar extends StatelessWidget {
         final segments = [
           for (final item in ellipsizedLegendItems) item.segment
         ];
-        return _build(context, segments, ellipsizedLegendItems);
+        return _build(context, segments, ellipsizedLegendItems, showLegend);
       },
     );
   }
 
-  Widget _build(
-    BuildContext context,
-    List<Segment> segments,
-    List<LegendItem> legendItems,
-  ) {
+  Widget _build(BuildContext context, List<Segment> segments,
+      List<LegendItem> legendItems, bool showLegend) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,16 +91,17 @@ class PrimerProgressBar extends StatelessWidget {
           style: barStyle,
           maxTotalValue: maxTotalValue,
         ),
-        SegmentedBarLegend(
-          style: SegmentedBarLegendStyle(
-            maxLines: null,
-            spacing: legendStyle.spacing,
-            runSpacing: legendStyle.runSpacing,
-            padding: legendStyle.padding,
+        if (showLegend)
+          SegmentedBarLegend(
+            style: SegmentedBarLegendStyle(
+              maxLines: null,
+              spacing: legendStyle.spacing,
+              runSpacing: legendStyle.runSpacing,
+              padding: legendStyle.padding,
+            ),
+            ellipsisBuilder: legendEllipsisBuilder,
+            children: legendItems,
           ),
-          ellipsisBuilder: legendEllipsisBuilder,
-          children: legendItems,
-        ),
       ],
     );
   }
