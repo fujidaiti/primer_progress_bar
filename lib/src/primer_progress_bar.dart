@@ -82,16 +82,16 @@ class PrimerProgressBar extends StatelessWidget {
 
   Widget _build(BuildContext context, List<Segment> segments,
       List<LegendItem> legendItems, bool showLegend) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SegmentedBar(
-          segments: segments,
-          style: barStyle,
-          maxTotalValue: maxTotalValue,
-        ),
-        if (showLegend)
+    if (showLegend) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SegmentedBar(
+            segments: segments,
+            style: barStyle,
+            maxTotalValue: maxTotalValue,
+          ),
           SegmentedBarLegend(
             style: SegmentedBarLegendStyle(
               maxLines: null,
@@ -102,7 +102,14 @@ class PrimerProgressBar extends StatelessWidget {
             ellipsisBuilder: legendEllipsisBuilder,
             children: legendItems,
           ),
-      ],
+        ],
+      );
+    }
+
+    return SegmentedBar(
+      segments: segments,
+      style: barStyle,
+      maxTotalValue: maxTotalValue,
     );
   }
 }
