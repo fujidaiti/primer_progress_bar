@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0 August 16, 2024
+
+- Add: `showLegend` Attribute to Toggle Legend Visibility (#24)
+
 ## 0.4.2 May 18, 2024
 
 Dependency updates.
