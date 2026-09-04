@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+- Fix: make legend items reflow without overflowing in narrow layouts.
+- Change: align legend items in responsive equal-width columns.
+
 ## 0.5.0 August 16, 2024
 
 - Add: `showLegend` Attribute to Toggle Legend Visibility (#24)

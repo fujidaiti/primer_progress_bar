@@ -108,6 +108,18 @@ The [PrimerProgressBar](https://pub.dev/documentation/primer_progress_bar/latest
 
 <br/>
 
+### Responsive legends
+
+The legend automatically arranges its items in equal-width columns. It uses
+additional columns when space is available and reflows to a single column in
+narrow layouts. Labels and values shrink independently, and extremely narrow
+items stack their text vertically to avoid horizontal overflow.
+
+No extra configuration is required; this behavior applies to both
+`PrimerProgressBar` and `SegmentedBarLegend`.
+
+<br/>
+
 ### Proportions of segment sizes
 
 The proportion of each segment size to the bar length is determined by dividing the [maxTotalValue](https://pub.dev/documentation/primer_progress_bar/latest/primer_progress_bar/PrimerProgressBar/maxTotalValue.html) according to the `value`s of the segments.  For example, if you want to display the percentage of each programming language used in a project,  the `value` could be the percentage for a language and the `maxTotalValue` is 100.
