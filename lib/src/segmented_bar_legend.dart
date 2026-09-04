@@ -1,9 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:primer_progress_bar/src/legend_item.dart';
 import 'package:primer_progress_bar/src/render_legend_simulation.dart';
 import 'package:primer_progress_bar/src/segmented_bar.dart';
 import 'package:primer_progress_bar/src/utils/padding_wrap.dart';
+
+const _legendItemMinimumWidth = 220.0;
+const _legendItemPreferredWidth = 280.0;
+const _legendItemWidthSafetyMargin = 8.0;
+const _legendValueMaximumWidth = 120.0;
 
 /// A legend for a [SegmentedBar].
 class SegmentedBarLegend extends StatelessWidget {
@@ -60,26 +67,25 @@ class SegmentedBarLegend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget result;
-    if (style.maxLines != null && children.isNotEmpty) {
-      result = LayoutBuilder(
+    return style.padding.wrap(
+      LayoutBuilder(
         builder: (context, constraints) {
+          final layout = _resolveLayout(context, constraints);
+          final items = style.maxLines == null
+              ? children
+              : _ellipsizeItems(layout.columnCount);
+
           return Wrap(
             spacing: style.spacing,
             runSpacing: style.runSpacing,
-            children: ellipsizeItems(context, constraints),
+            children: [
+              for (final item in items)
+                SizedBox(width: layout.itemWidth, child: item),
+            ],
           );
         },
-      );
-    } else {
-      result = Wrap(
-        spacing: style.spacing,
-        runSpacing: style.runSpacing,
-        children: children,
-      );
-    }
-
-    return style.padding.wrap(result);
+      ),
+    );
   }
 
   @internal
@@ -93,27 +99,129 @@ class SegmentedBarLegend extends StatelessWidget {
       "`ellipsisBuilder` must be specified.",
     );
 
-    final result = RenderLegendSimulation(
-      context: context,
-      renderExtent: constraints.maxWidth,
-      spacing: style.spacing,
-      maxLines: style.maxLines,
-      items: children,
-      ellipsisBuilder: ellipsisBuilder!,
-      textScaler:
-          MediaQuery.maybeOf(context)?.textScaler ?? const TextScaler.linear(1),
-      textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
-    ).alignItems();
-
-    if (result.alignedItemCount < children.length) {
-      return [
-        ...children.take(result.alignedItemCount),
-        ellipsisBuilder!(children.length - result.alignedItemCount),
-      ];
-    } else {
-      return children;
-    }
+    return _ellipsizeItems(_resolveLayout(context, constraints).columnCount);
   }
+
+  List<LegendItem> _ellipsizeItems(int columnCount) {
+    final maxLines = style.maxLines;
+    if (maxLines == null) return children;
+
+    final capacity = columnCount * maxLines;
+    if (children.length <= capacity) return children;
+
+    final visibleItemCount = capacity - 1;
+    final truncatedItemCount = children.length - visibleItemCount;
+    return [
+      ...children.take(visibleItemCount),
+      ellipsisBuilder!(truncatedItemCount),
+    ];
+  }
+
+  _LegendLayout _resolveLayout(
+    BuildContext context,
+    BoxConstraints constraints,
+  ) {
+    final availableWidth = constraints.hasBoundedWidth
+        ? constraints.maxWidth
+        : _legendItemPreferredWidth;
+
+    var maxNaturalItemWidth = _legendItemMinimumWidth;
+    for (final item in children) {
+      maxNaturalItemWidth = max(
+        maxNaturalItemWidth,
+        _measureNaturalItemWidth(context, item),
+      );
+    }
+
+    final effectiveMinimumWidth =
+        maxNaturalItemWidth + _legendItemWidthSafetyMargin;
+    final columnCount = max(
+      1,
+      ((availableWidth + style.spacing) /
+              (effectiveMinimumWidth + style.spacing))
+          .floor(),
+    );
+    final distributedItemWidth =
+        (availableWidth - style.spacing * (columnCount - 1)) / columnCount;
+
+    return _LegendLayout(
+      columnCount: columnCount,
+      itemWidth: min(_legendItemPreferredWidth, max(0, distributedItemWidth)),
+    );
+  }
+
+  double _measureNaturalItemWidth(BuildContext context, LegendItem item) {
+    final itemStyle = item.resolveStyle(context);
+    var width =
+        itemStyle.padding.horizontal +
+        itemStyle.handlePadding.horizontal +
+        itemStyle.handleSize;
+
+    if (itemStyle.behavior != LegendItemBehavior.onlyValue &&
+        item.segment.label != null) {
+      width +=
+          itemStyle.labelPadding.horizontal +
+          _measureTextWidth(
+            context,
+            item.segment.label!,
+            itemStyle.labelStyle,
+            itemStyle.maxLabelSize,
+          );
+    }
+    if (itemStyle.behavior != LegendItemBehavior.onlyLabel) {
+      width +=
+          itemStyle.valueLabelPadding.horizontal +
+          _measureTextWidth(
+            context,
+            item.segment.valueLabel,
+            itemStyle.valueLabelStyle,
+            _legendValueMaximumWidth,
+          );
+    }
+
+    return width;
+  }
+
+  double _measureTextWidth(
+    BuildContext context,
+    Text text,
+    TextStyle? fallbackStyle,
+    double maximumWidth,
+  ) {
+    final defaultStyle = fallbackStyle ?? DefaultTextStyle.of(context).style;
+    final textStyle = text.style == null
+        ? defaultStyle
+        : defaultStyle.merge(text.style);
+    final InlineSpan span;
+    if (text.textSpan != null) {
+      span = TextSpan(style: textStyle, children: [text.textSpan!]);
+    } else {
+      span = TextSpan(text: text.data, style: textStyle);
+    }
+
+    final painter = TextPainter(
+      text: span,
+      maxLines: 1,
+      ellipsis: '\u2026',
+      textScaler:
+          text.textScaler ??
+          MediaQuery.maybeOf(context)?.textScaler ??
+          const TextScaler.linear(1),
+      textDirection:
+          text.textDirection ??
+          Directionality.maybeOf(context) ??
+          TextDirection.ltr,
+      locale: text.locale,
+    )..layout(maxWidth: maximumWidth);
+    return painter.width;
+  }
+}
+
+class _LegendLayout {
+  const _LegendLayout({required this.columnCount, required this.itemWidth});
+
+  final int columnCount;
+  final double itemWidth;
 }
 
 /// An immutable style that can be applied to [SegmentedBarLegend]s.
@@ -124,13 +232,10 @@ class SegmentedBarLegendStyle {
     this.maxLines,
     this.spacing = 4,
     this.runSpacing = 4,
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 4,
-      horizontal: 8,
-    ),
-  })  : assert(maxLines == null || maxLines > 0),
-        assert(spacing >= 0),
-        assert(runSpacing >= 0);
+    this.padding = const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+  }) : assert(maxLines == null || maxLines > 0),
+       assert(spacing >= 0),
+       assert(runSpacing >= 0);
 
   /// The maximum number of lines in the legend.
   final int? maxLines;
@@ -155,11 +260,6 @@ class SegmentedBarLegendStyle {
           padding == other.padding);
 
   @override
-  int get hashCode => Object.hash(
-        runtimeType,
-        maxLines,
-        spacing,
-        runSpacing,
-        padding,
-      );
+  int get hashCode =>
+      Object.hash(runtimeType, maxLines, spacing, runSpacing, padding);
 }

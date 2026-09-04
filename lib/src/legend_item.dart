@@ -1,17 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:primer_progress_bar/src/segment.dart';
 import 'package:primer_progress_bar/src/segmented_bar_legend.dart';
 import 'package:primer_progress_bar/src/utils/padding_wrap.dart';
 
+const _horizontalLayoutMinimumWidth = 32.0;
+const _valueLabelMaximumWidth = 120.0;
+
 /// An item aligned in a [SegmentedBarLegend].
 class LegendItem extends StatelessWidget {
   /// Create a legend item from a [Segment].
-  const LegendItem({
-    super.key,
-    required this.segment,
-    this.style,
-  });
+  const LegendItem({super.key, required this.segment, this.style});
 
   /// The [Segment] that this legend item represents.
   final Segment segment;
@@ -30,27 +31,18 @@ class LegendItem extends StatelessWidget {
     final handle = SizedBox.square(
       dimension: style.handleSize,
       child: DecoratedBox(
-        decoration: style.handleDecoration.copyWith(
-          color: segment.color,
-        ),
+        decoration: style.handleDecoration.copyWith(color: segment.color),
       ),
     );
 
     final Widget? label;
     if (style.behavior != LegendItemBehavior.onlyValue &&
         segment.label != null) {
-      label = ConstrainedBox(
-        constraints: BoxConstraints.loose(
-          Size.fromWidth(style.maxLabelSize),
-        ),
-        child: style.labelStyle == null
-            ? segment.label
-            : DefaultTextStyle(
-                style: style.labelStyle!,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                child: segment.label!,
-              ),
+      label = DefaultTextStyle.merge(
+        style: style.labelStyle,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        child: segment.label!,
       );
     } else {
       label = null;
@@ -58,25 +50,68 @@ class LegendItem extends StatelessWidget {
 
     final Widget? valueLabel;
     if (style.behavior != LegendItemBehavior.onlyLabel) {
-      valueLabel = style.valueLabelStyle == null
-          ? segment.valueLabel
-          : DefaultTextStyle(
-              style: style.valueLabelStyle!,
-              maxLines: 1,
-              child: segment.valueLabel,
-            );
+      valueLabel = DefaultTextStyle.merge(
+        style: style.valueLabelStyle,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        child: _ShrinkableValueText(segment.valueLabel),
+      );
     } else {
       valueLabel = null;
     }
 
     return style.padding.wrap(
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          style.handlePadding.wrap(handle),
-          if (label != null) style.labelPadding.wrap(label),
-          if (valueLabel != null) style.valueLabelPadding.wrap(valueLabel),
-        ],
+      LayoutBuilder(
+        builder: (context, constraints) {
+          final handleWidth = style.handleSize + style.handlePadding.horizontal;
+          if (constraints.hasBoundedWidth &&
+              constraints.maxWidth <
+                  max(_horizontalLayoutMinimumWidth, handleWidth)) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (label != null) style.labelPadding.wrap(label),
+                if (valueLabel != null)
+                  style.valueLabelPadding.wrap(valueLabel),
+              ],
+            );
+          }
+
+          final availableForValue = constraints.hasBoundedWidth
+              ? max(0.0, constraints.maxWidth - handleWidth)
+              : _valueLabelMaximumWidth;
+          final valueMaximumWidth = min(
+            _valueLabelMaximumWidth,
+            availableForValue,
+          );
+
+          return Row(
+            mainAxisSize: constraints.hasBoundedWidth
+                ? MainAxisSize.max
+                : MainAxisSize.min,
+            children: [
+              style.handlePadding.wrap(handle),
+              if (label != null)
+                Expanded(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: style.labelPadding.wrap(
+                      ConstrainedBox(
+                        constraints:
+                            BoxConstraints(maxWidth: style.maxLabelSize),
+                        child: label,
+                      ),
+                    ),
+                  ),
+                ),
+              if (valueLabel != null)
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: valueMaximumWidth),
+                  child: style.valueLabelPadding.wrap(valueLabel),
+                ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -91,9 +126,7 @@ class LegendItem extends StatelessWidget {
     final valueLabelStyle = style?.valueLabelStyle ??
         (behavior == LegendItemBehavior.onlyValue
             ? labelStyle
-            : labelStyle?.copyWith(
-                color: labelStyle.color?.withOpacity(0.6),
-              ));
+            : labelStyle?.copyWith(color: labelStyle.color?.withOpacity(0.6)));
 
     return LegendItemStyle(
       handleSize: style?.handleSize ?? defaultStyle.handleSize,
@@ -110,6 +143,99 @@ class LegendItem extends StatelessWidget {
       valueLabelStyle: valueLabelStyle,
     );
   }
+}
+
+class _ShrinkableValueText extends StatelessWidget {
+  const _ShrinkableValueText(this.text);
+
+  final Text text;
+
+  @override
+  Widget build(BuildContext context) {
+    final value = text.data;
+    if (value == null) return text;
+
+    final separatorIndex = value.lastIndexOf(' ');
+    if (separatorIndex < 0) {
+      return _copyText(text, value, overflow: TextOverflow.ellipsis);
+    }
+
+    final leadingText = value.substring(0, separatorIndex);
+    final trailingText = value.substring(separatorIndex);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final defaultStyle = DefaultTextStyle.of(context).style;
+        final effectiveStyle =
+            text.style == null ? defaultStyle : defaultStyle.merge(text.style);
+        final painter = TextPainter(
+          text: TextSpan(text: trailingText, style: effectiveStyle),
+          maxLines: 1,
+          textScaler: text.textScaler ??
+              MediaQuery.maybeOf(context)?.textScaler ??
+              const TextScaler.linear(1),
+          textDirection: text.textDirection ??
+              Directionality.maybeOf(context) ??
+              TextDirection.ltr,
+          locale: text.locale,
+        )..layout();
+
+        if (constraints.maxWidth <= painter.width + 1) {
+          return _copyText(text, value, overflow: TextOverflow.ellipsis);
+        }
+
+        Widget result = Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: _copyText(
+                text,
+                leadingText,
+                overflow: TextOverflow.ellipsis,
+                preserveKey: false,
+              ),
+            ),
+            _copyText(text, trailingText, preserveKey: false),
+          ],
+        );
+        if (text.semanticsLabel != null) {
+          result = Semantics(
+            label: text.semanticsLabel,
+            excludeSemantics: true,
+            child: result,
+          );
+        }
+        if (text.key != null) {
+          result = KeyedSubtree(key: text.key, child: result);
+        }
+        return result;
+      },
+    );
+  }
+}
+
+Text _copyText(
+  Text source,
+  String data, {
+  TextOverflow? overflow,
+  bool preserveKey = true,
+}) {
+  return Text(
+    data,
+    key: preserveKey ? source.key : null,
+    style: source.style,
+    strutStyle: source.strutStyle,
+    textAlign: source.textAlign,
+    textDirection: source.textDirection,
+    locale: source.locale,
+    softWrap: source.softWrap,
+    overflow: overflow,
+    textScaler: source.textScaler,
+    maxLines: 1,
+    semanticsLabel: null,
+    textWidthBasis: source.textWidthBasis,
+    textHeightBehavior: source.textHeightBehavior,
+    selectionColor: source.selectionColor,
+  );
 }
 
 /// Describes how a [LegendItem] paints its texts.
